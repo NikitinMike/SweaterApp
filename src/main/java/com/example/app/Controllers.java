@@ -2,31 +2,31 @@ package com.example.app;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
-@RestController
-@RequestMapping("/")
+@Controller
 public class Controllers {
 
   @Autowired
   Services service;
 
-  @GetMapping("/")
-  private List<Sweater> start(Model model) {
-    return service.getAll();
+  @GetMapping("/hello")
+  public String greeting(Model model,
+      @RequestParam(name = "name", required = false, defaultValue = "World") String name) {
+    model.addAttribute("name", name);
+    return "greetings";
   }
 
   @GetMapping("/all")
-  private List<Sweater> getall(Model model) {
+  private List<Message> getall(Model model) {
     return service.getAll();
   }
 
   @GetMapping("/id/{id}")
-  private Sweater get(Model model, @RequestParam Long id) {
+  private Message get(Model model, @RequestParam Long id) {
     return service.get(id);
   }
 

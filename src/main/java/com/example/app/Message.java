@@ -1,6 +1,5 @@
 package com.example.app;
 
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,7 +13,7 @@ import org.springframework.core.annotation.Order;
 @NoArgsConstructor
 @Data
 @Entity
-public class Sweater {
+public class Message {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;

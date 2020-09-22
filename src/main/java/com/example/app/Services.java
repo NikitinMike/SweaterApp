@@ -10,11 +10,11 @@ public class Services {
   @Autowired
   private Repository repository;
 
-  public List<Sweater> getAll(){
+  public List<Message> getAll(){
     return repository.findAll();
   }
-  public Sweater get(Long id){
-    return repository.findSweatersById(id);
+  public Message get(Long id){
+    return repository.findMessagesById(id);
   }
 
 }
