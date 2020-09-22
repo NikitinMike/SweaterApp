@@ -10,11 +10,17 @@ public class Services {
   @Autowired
   private Repository repository;
 
+  public List<Message> getByTag(String tag){
+    return repository.findByTagContaining(tag);
+  }
   public List<Message> getAll(){
     return repository.findAll();
   }
   public Message get(Long id){
-    return repository.findMessagesById(id);
+    return repository.getById(id);
   }
 
+  public void newMessage(String text, String tag) {
+    repository.save(new Message(text,tag));
+  }
 }

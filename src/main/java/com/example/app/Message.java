@@ -18,7 +18,12 @@ public class Message {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
+  private String text;
   @Order
-  private String title;
+  private String tag;
 
+  public Message(String text, String tag) {
+    this.text=text;
+    this.tag=tag;
+  }
 }

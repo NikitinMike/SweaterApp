@@ -1,9 +1,11 @@
 package com.example.app;
 
 import java.util.List;
+import java.util.Optional;
 import org.springframework.data.repository.CrudRepository;
 
 public interface Repository extends CrudRepository<Message, Long> {
-  Message findMessagesById(Long id);
+  Message getById(Long id);
   List<Message> findAll();
+  List<Message> findByTagContaining(String tag);
 }
