@@ -1,6 +1,7 @@
 package com.example.app;
 
 import java.util.List;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,10 +15,16 @@ public class Controllers {
   Services service;
 
   @GetMapping("/hello")
-  public String greeting(Model model,
+  public String greeting(Map<String,Object> model,
       @RequestParam(name = "name", required = false, defaultValue = "World") String name) {
-    model.addAttribute("name", name);
+    model.put("name", name);
     return "greetings";
+  }
+
+  @GetMapping
+  public String main(Map<String,Object> model) {
+    model.put("some", "Hello, Lets code");
+    return "main";
   }
 
   @GetMapping("/all")
