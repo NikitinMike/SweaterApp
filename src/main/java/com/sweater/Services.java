@@ -6,14 +6,16 @@ import com.sweater.data.User;
 import com.sweater.data.UsersRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
-public class Services {
+public class Services implements UserDetailsService {
 
   @Autowired
   private MessagesRepository messages;
-
   @Autowired
   private UsersRepository users;
 
@@ -25,8 +27,8 @@ public class Services {
     users.save(user);
   }
 
-  public List<Message> getMessagesByTag(String tag) {
-    return messages.findByTagContaining(tag);
+  public List<Message> getMessagesByFilter(String text) {
+    return messages.findByTagContainingOrTextContaining(text,text);
   }
 
   public List<Message> getAllMessages() {
@@ -37,7 +39,12 @@ public class Services {
     return messages.getById(id);
   }
 
-  public Message newMessage(String text, String tag) {
-    return messages.save(new Message(text, tag));
+  public Message newMessage(String text, String tag, User author) {
+    return messages.save(new Message(text, tag, author));
+  }
+
+  @Override
+  public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
+    return users.findByUsername(s);
   }
 }

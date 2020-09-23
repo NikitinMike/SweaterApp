@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -58,9 +59,9 @@ public class Controllers {
   }
 
   @PostMapping("add")
-  public String add(Map<String, Object> model,
+  public String add(@AuthenticationPrincipal User user, Map<String, Object> model,
       @RequestParam String text, @RequestParam String tag) {
-    service.newMessage(text, tag);
+    service.newMessage(text, tag, user);
     model.put("some", "Сообщения");
     model.put("messages", service.getAllMessages());
     return "main";
@@ -72,7 +73,7 @@ public class Controllers {
     if (filter == null || filter.isBlank() || filter.isEmpty()) {
       model.put("messages", service.getAllMessages());
     } else {
-      model.put("messages", service.getMessagesByTag(filter));
+      model.put("messages", service.getMessagesByFilter(filter));
     }
     return "main";
   }
