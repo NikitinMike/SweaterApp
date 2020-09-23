@@ -1,4 +1,4 @@
-package com.example.app;
+package com.sweater.app;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

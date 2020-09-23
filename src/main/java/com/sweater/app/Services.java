@@ -1,4 +1,4 @@
-package com.example.app;
+package com.sweater.app;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;

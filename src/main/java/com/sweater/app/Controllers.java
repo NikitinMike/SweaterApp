@@ -1,4 +1,4 @@
-package com.example.app;
+package com.sweater.app;
 
 import java.util.Collections;
 import java.util.List;
