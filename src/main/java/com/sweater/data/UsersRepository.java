@@ -1,5 +1,6 @@
-package com.sweater.app;
+package com.sweater.data;
 
+import com.sweater.data.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UsersRepository extends JpaRepository<User, Long> {

@@ -1,4 +1,4 @@
-package com.sweater.app;
+package com.sweater.data;
 
 public enum Role {
   USER

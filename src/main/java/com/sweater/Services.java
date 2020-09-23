@@ -1,5 +1,9 @@
-package com.sweater.app;
+package com.sweater;
 
+import com.sweater.data.Message;
+import com.sweater.data.MessagesRepository;
+import com.sweater.data.User;
+import com.sweater.data.UsersRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

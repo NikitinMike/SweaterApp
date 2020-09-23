@@ -1,5 +1,6 @@
-package com.sweater.app;
+package com.sweater.data;
 
+import com.sweater.data.Message;
 import java.util.List;
 import org.springframework.data.repository.CrudRepository;
 

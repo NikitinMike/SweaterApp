@@ -1,4 +1,4 @@
-package com.sweater.app;
+package com.sweater.config;
 
 import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;

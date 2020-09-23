@@ -1,4 +1,4 @@
-package com.sweater.app;
+package com.sweater.data;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

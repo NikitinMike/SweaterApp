@@ -1,5 +1,8 @@
-package com.sweater.app;
+package com.sweater;
 
+import com.sweater.data.Message;
+import com.sweater.data.Role;
+import com.sweater.data.User;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;

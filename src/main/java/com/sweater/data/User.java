@@ -1,4 +1,4 @@
-package com.sweater.app;
+package com.sweater.data;
 
 import java.util.Set;
 import javax.persistence.CollectionTable;
