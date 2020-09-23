@@ -7,7 +7,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class Controllers {
@@ -15,7 +17,7 @@ public class Controllers {
   @Autowired
   Services service;
 
-  @GetMapping("/hello")
+  @GetMapping("hello")
   public String greeting(Map<String, Object> model,
       @RequestParam(name = "name", required = false, defaultValue = "World") String name) {
     model.put("name", name);
@@ -49,12 +51,14 @@ public class Controllers {
     return "main";
   }
 
-  @GetMapping("/all")
+  @GetMapping("all")
+  @ResponseBody
   private List<Message> getall(Model model) {
     return service.getAll();
   }
 
-  @GetMapping("/id/{id}")
+  @GetMapping("id/{id}")
+  @ResponseBody
   private Message get(Model model, @RequestParam Long id) {
     return service.get(id);
   }
