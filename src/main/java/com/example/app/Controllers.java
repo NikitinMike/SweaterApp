@@ -17,14 +17,20 @@ public class Controllers {
   @Autowired
   Services service;
 
-  @GetMapping("hello")
+  @GetMapping("/")
+  public String start(Map<String, Object> model) {
+    model.put("name", "user");
+    return "greetings";
+  }
+
+  @GetMapping("/hello")
   public String greeting(Map<String, Object> model,
       @RequestParam(name = "name", required = false, defaultValue = "World") String name) {
     model.put("name", name);
     return "greetings";
   }
 
-  @GetMapping
+  @GetMapping("main")
   public String main(Map<String, Object> model) {
     model.put("some", "Сообщения");
     model.put("messages", service.getAll());

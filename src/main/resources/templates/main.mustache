@@ -5,27 +5,39 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 </head>
 <body>
+<div>
+  <form action="/logout" method="post">
+    <input type="submit" value="Sign Out"/>
+    <input type="hidden" name="_csrf" value="{{_csrf.token}}">
+  </form>
+</div>
 
-  <div>
-    <form method="post" action="add">
-      <input type="text" name="text" placeholder="message">
-      <input type="text" name="tag" placeholder="tag">
-      <button type="submit">ADD</button>
-    </form>
-  </div>
+<div>
+  <form method="post" action="add">
+    <input type="text" name="text" placeholder="message">
+    <input type="text" name="tag" placeholder="tag">
+    <input type="hidden" name="_csrf" value="{{_csrf.token}}">
+    <button type="submit">ADD</button>
+  </form>
+</div>
+
+<div>
   <form method="post" action="filter">
     <input type="text" name="filter">
+    <input type="hidden" name="_csrf" value="{{_csrf.token}}">
     <button type="submit">FIND</button>
   </form>
-  <div>{{some}}</div>
+</div>
 
-  {{#messages}}
-    <div>
-      <b>{{id}}</b>
-      <span>{{text}}</span>
-      <i>{{tag}}</i>
-    </div>
-  {{/messages}}
+<div>{{some}}</div>
+
+{{#messages}}
+<div>
+  <b>{{id}}</b>
+  <span>{{text}}</span>
+  <i>{{tag}}</i>
+</div>
+{{/messages}}
 
 </body>
 </html>
