@@ -8,19 +8,29 @@ import org.springframework.stereotype.Service;
 public class Services {
 
   @Autowired
-  private Repository repository;
+  private MessagesRepository messages;
+
+  @Autowired
+  private UsersRepository users;
+
+  public User getUser(String username){
+    return users.findByUsername(username);
+  }
+  public void saveUser(User user){
+    users.save(user);
+  }
 
   public List<Message> getByTag(String tag){
-    return repository.findByTagContaining(tag);
+    return messages.findByTagContaining(tag);
   }
   public List<Message> getAll(){
-    return repository.findAll();
+    return messages.findAll();
   }
   public Message get(Long id){
-    return repository.getById(id);
+    return messages.getById(id);
   }
 
   public void newMessage(String text, String tag) {
-    repository.save(new Message(text,tag));
+    messages.save(new Message(text,tag));
   }
 }
