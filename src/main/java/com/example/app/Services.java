@@ -13,24 +13,27 @@ public class Services {
   @Autowired
   private UsersRepository users;
 
-  public User getUser(String username){
+  public User getUserByName(String username) {
     return users.findByUsername(username);
   }
-  public void saveUser(User user){
+
+  public void saveUser(User user) {
     users.save(user);
   }
 
-  public List<Message> getByTag(String tag){
+  public List<Message> getMessagesByTag(String tag) {
     return messages.findByTagContaining(tag);
   }
-  public List<Message> getAll(){
+
+  public List<Message> getAllMessages() {
     return messages.findAll();
   }
-  public Message get(Long id){
+
+  public Message getMessage(Long id) {
     return messages.getById(id);
   }
 
-  public void newMessage(String text, String tag) {
-    messages.save(new Message(text,tag));
+  public Message newMessage(String text, String tag) {
+    return messages.save(new Message(text, tag));
   }
 }

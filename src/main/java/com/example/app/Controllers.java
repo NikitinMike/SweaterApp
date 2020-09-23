@@ -24,7 +24,7 @@ public class Controllers {
 
   @PostMapping("/registration")
   public String addUser(User user, Map<String, Object> model) {
-    if (service.getUser(user.getUsername()) != null) {
+    if (service.getUserByName(user.getUsername()) != null) {
       model.put("message", "User exists");
       return "registration";
     }
@@ -50,7 +50,7 @@ public class Controllers {
   @GetMapping("main")
   public String main(Map<String, Object> model) {
     model.put("some", "Сообщения");
-    model.put("messages", service.getAll());
+    model.put("messages", service.getAllMessages());
     return "main";
   }
 
@@ -59,7 +59,7 @@ public class Controllers {
       @RequestParam String text, @RequestParam String tag) {
     service.newMessage(text, tag);
     model.put("some", "Сообщения");
-    model.put("messages", service.getAll());
+    model.put("messages", service.getAllMessages());
     return "main";
   }
 
@@ -67,9 +67,9 @@ public class Controllers {
   public String filter(Map<String, Object> model, @RequestParam String filter) {
     model.put("some", "Сообщения");
     if (filter == null || filter.isBlank() || filter.isEmpty()) {
-      model.put("messages", service.getAll());
+      model.put("messages", service.getAllMessages());
     } else {
-      model.put("messages", service.getByTag(filter));
+      model.put("messages", service.getMessagesByTag(filter));
     }
     return "main";
   }
@@ -77,13 +77,13 @@ public class Controllers {
   @GetMapping("all")
   @ResponseBody
   private List<Message> getall(Model model) {
-    return service.getAll();
+    return service.getAllMessages();
   }
 
   @GetMapping("id/{id}")
   @ResponseBody
   private Message get(Model model, @RequestParam Long id) {
-    return service.get(id);
+    return service.getMessage(id);
   }
 
 }
