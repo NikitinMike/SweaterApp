@@ -5,7 +5,6 @@ import com.sweater.data.Role;
 import com.sweater.data.User;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -27,9 +26,9 @@ public class Controllers {
   }
 
   @PostMapping("/registration")
-  public String addUser(User user, Map<String, Object> model) {
+  public String addUser(User user, Model model) {
     if (service.getUserByName(user.getUsername()) != null) {
-      model.put("message", "User exists");
+      model.addAttribute("message", "User exists");
       return "registration";
     }
     user.setActive(true);
@@ -39,42 +38,38 @@ public class Controllers {
   }
 
   @GetMapping("/")
-  public String start(Map<String, Object> model) {
-    model.put("name", "user");
+  public String start(Model model) {
+    model.addAttribute("name", "user");
     return "greetings";
   }
 
   @GetMapping("/hello")
-  public String greeting(Map<String, Object> model,
+  public String greeting(Model model,
       @RequestParam(name = "name", required = false, defaultValue = "World") String name) {
-    model.put("name", name);
+    model.addAttribute("name", name);
     return "greetings";
   }
 
   @GetMapping("main")
-  public String main(Map<String, Object> model) {
-    model.put("some", "Сообщения");
-    model.put("messages", service.getAllMessages());
+  public String main(Model model, @RequestParam(required = false, defaultValue = "") String filter) {
+    model.addAttribute("some", "Сообщения");
+    if (filter == null || filter.isBlank() || filter.isEmpty()) {
+      model.addAttribute("messages", service.getAllMessages());
+    } else {
+      model.addAttribute("messages", service.getMessagesByFilter(filter));
+    }
+    model.addAttribute("filter", filter);
     return "main";
   }
 
-  @PostMapping("add")
-  public String add(@AuthenticationPrincipal User user, Map<String, Object> model,
+  @PostMapping("main")
+  public String add(@AuthenticationPrincipal User user, Model model,
+      @RequestParam(required = false, defaultValue = "") String filter,
       @RequestParam String text, @RequestParam String tag) {
     service.newMessage(text, tag, user);
-    model.put("some", "Сообщения");
-    model.put("messages", service.getAllMessages());
-    return "main";
-  }
-
-  @PostMapping("filter")
-  public String filter(Map<String, Object> model, @RequestParam String filter) {
-    model.put("some", "Сообщения");
-    if (filter == null || filter.isBlank() || filter.isEmpty()) {
-      model.put("messages", service.getAllMessages());
-    } else {
-      model.put("messages", service.getMessagesByFilter(filter));
-    }
+    model.addAttribute("some", "Сообщения");
+    model.addAttribute("messages", service.getAllMessages());
+    model.addAttribute("filter", filter);
     return "main";
   }
 

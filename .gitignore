@@ -31,3 +31,5 @@ build/
 
 ### VS Code ###
 .vscode/
+!/hello.html
+src/test/java/com/example/
