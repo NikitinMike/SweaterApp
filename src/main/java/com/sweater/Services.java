@@ -35,6 +35,10 @@ public class Services implements UserDetailsService {
     return messages.findAll();
   }
 
+  public List<User> getAllUsers() {
+    return users.findAll();
+  }
+
   public Message getMessage(Long id) {
     return messages.getById(id);
   }

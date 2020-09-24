@@ -1,10 +1,8 @@
 package com.sweater;
 
-import com.sweater.data.Message;
 import com.sweater.data.Role;
 import com.sweater.data.User;
 import java.util.Collections;
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -12,7 +10,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class Controllers {
@@ -38,21 +35,16 @@ public class Controllers {
   }
 
   @GetMapping("/")
-  public String start(Model model) {
-    model.addAttribute("name", "user");
-    return "greetings";
-  }
-
-  @GetMapping("/hello")
-  public String greeting(Model model,
-      @RequestParam(name = "name", required = false, defaultValue = "World") String name) {
-    model.addAttribute("name", name);
+  public String start(Model model,@AuthenticationPrincipal User user)
+  {
+    model.addAttribute("name", (user!=null)?user.getUsername():"World");
     return "greetings";
   }
 
   @GetMapping("main")
-  public String main(Model model, @RequestParam(required = false, defaultValue = "") String filter) {
-    model.addAttribute("some", "Сообщения");
+  public String main(Model model,
+      @RequestParam(required = false, defaultValue = "") String filter)
+  {
     if (filter == null || filter.isBlank() || filter.isEmpty()) {
       model.addAttribute("messages", service.getAllMessages());
     } else {
@@ -63,26 +55,13 @@ public class Controllers {
   }
 
   @PostMapping("main")
-  public String add(@AuthenticationPrincipal User user, Model model,
+  public String addMessage(@AuthenticationPrincipal User user, Model model,
       @RequestParam(required = false, defaultValue = "") String filter,
       @RequestParam String text, @RequestParam String tag) {
     service.newMessage(text, tag, user);
-    model.addAttribute("some", "Сообщения");
     model.addAttribute("messages", service.getAllMessages());
     model.addAttribute("filter", filter);
     return "main";
-  }
-
-  @GetMapping("all")
-  @ResponseBody
-  private List<Message> getall(Model model) {
-    return service.getAllMessages();
-  }
-
-  @GetMapping("id/{id}")
-  @ResponseBody
-  private Message get(Model model, @RequestParam Long id) {
-    return service.getMessage(id);
   }
 
 }
